@@ -1,8 +1,10 @@
 package me.hjjang.mvc.basic.request;
 
 import lombok.extern.slf4j.Slf4j;
+import me.hjjang.mvc.basic.HelloData;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -89,5 +91,41 @@ public class RequestParamController {
         log.info("MultiMap username = {}", paramMap.get("username"));
 
         return "ok Required";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v0")
+    public String modelAttributeV0(@RequestParam String username, @RequestParam int age) {
+        HelloData helloData = new HelloData();
+        helloData.setUsername(username);
+        helloData.setAge(age);
+
+        log.info("username : {}, age : {}", username, age);
+        log.info("V0 HelloData : {}", helloData);
+        return "ok V0 ModelAttribute ";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+
+        log.info("V1 HelloData : {}", helloData);
+        return "ok V1 ModelAttribute ";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData) {
+
+        log.info("V2 HelloData : {}", helloData);
+        return "ok V2 ModelAttribute ";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v3")
+    public String modelAttributeV3(HelloData helloData, String username, int age) {
+        log.info("username : {}, age : {}", username, age);
+        log.info("V3 HelloData : {}", helloData);
+        return "ok V3 ModelAttribute ";
     }
 }
